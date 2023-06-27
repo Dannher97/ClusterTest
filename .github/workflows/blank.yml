@@ -22,4 +22,4 @@ jobs:
           R -e "install.packages(c('tidyverse', 'shiny', 'dplyr', 'factoextra', 'cluster', 'NbClust', 'ClusterR', 'mclust', 'fpc', 'modeest', 'fastDummies', 'ramify', 'scales', 'shinyjs', 'vcd'))"
 
       - name: Deploy Shiny app
-        run: R -e "shiny::runApp('.', appName = 'ymlTest')"
+        run: R -e "shiny::runApp('.')"
