@@ -18,29 +18,14 @@ jobs:
         with:
           path: ${{ github.workspace }}/ClusterTest
 
-      # Make R will be able to deploy application to shinyapps.io
       - name: Install R packages
         run: |
-          sudo apt install apt-transport-https software-properties-common
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-          sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
-          sudo apt update
-          echo r-base hold | sudo dpkg --set-selections
-          echo r-recommended hold | sudo dpkg --set-selections
-          sudo apt install build-essential
-          sudo apt-get install libssl-dev libcurl4-openssl-dev
-          sudo add-apt-repository ppa:c2d4u.team/c2d4u4.0+
-          sudo apt install --no-install-recommends r-cran-rjava r-cran-permute r-cran-readr r-cran-stringi r-cran-stringr r-cran-vegan r-cran-dt r-cran-rcpp r-cran-shiny r-cran-shinyjs r-cran-shinythemes r-cran-shinywidgets
-          sudo apt install --no-install-recommends r-cran-dplyr r-cran-plyr r-cran-cpp11 r-cran-data.table r-cran-fastmap r-cran-bslib r-cran-gtable r-cran-httpuv r-cran-ggplot2 r-cran-farver r-cran-commonmark r-cran-cachem
-          sudo apt install --no-install-recommends r-cran-aws.signature r-cran-httr r-cran-proto r-cran-xml2 r-cran-sysfonts r-cran-showtext r-cran-showtextdb
-          sudo apt install --no-install-recommends r-cran-rsconnect r-cran-ragg r-cran-textshaping r-cran-tidyverse
-          sudo apt install --no-install-recommends r-cran-shinywidgets r-cran-promises r-cran-future
+          # Install required R packages
+          R -e "install.packages(c('tidyverse', 'shiny','dplyr',
+          'factoextra', 'cluster','NbClust','ClusterR', 'mclust','fpc',
+          'modeest', 'fastDummies','ramify','scales', 'shinyjs','vcd','rsconnect'))"
 
-      # Deployment
       - name: Deploy app to shinyapps.io
         run: |
           cd ${{ github.workspace }}/ClusterTest
-          Rscript \
-            -e 'library(rsconnect)' \
-            -e 'rsconnect::setAccountInfo(name="${{ secrets.SHINYAPPS_NAME }}",token="${{ secrets.SHINYAPPS_TOKEN }}", secret="${{ secrets.SHINYAPPS_SECRET }}")' \
-            -e 'rsconnect::deployApp(".",appName="clustering")'
+          R -e "library(rsconnect); rsconnect::deployApp('.', appName = 'YMLTest')"
