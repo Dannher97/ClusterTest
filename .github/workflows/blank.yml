@@ -13,11 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - uses: actions/checkout@v2
-        with:
-          path: ${{ github.workspace }}/ClusterTest
-
+    
       - name: Install R packages
         run: |
           # Install required R packages
