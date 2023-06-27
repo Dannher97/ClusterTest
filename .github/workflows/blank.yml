@@ -1,27 +1,26 @@
-name: Deploy to shinyapps.io
-
+name: Deploy Shiny App
 on:
-  workflow_dispatch:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-
-  deploy-app-to-shinyapps:
-
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    
-      - name: Install R packages
-        run: |
-          # Install required R packages
-          R -e "install.packages(c('tidyverse', 'shiny','dplyr',
-          'factoextra', 'cluster','NbClust','ClusterR', 'mclust','fpc',
-          'modeest', 'fastDummies','ramify','scales', 'shinyjs','vcd','rsconnect'))"
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Deploy app to shinyapps.io
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: '4.3'
+
+      - name: Install dependencies
         run: |
-          cd ${{ github.workspace }}/ClusterTest
-          R -e "library(rsconnect); rsconnect::deployApp('.', appName = 'YMLTest')"
+          R -e "install.packages(c('tidyverse', 'shiny', 'dplyr', 'factoextra', 'cluster', 'NbClust', 'ClusterR', 'mclust', 'fpc', 'modeest', 'fastDummies', 'ramify', 'scales', 'shinyjs', 'vcd'))"
+
+      - name: Deploy Shiny app
+        run: R -e "shiny::runApp('.', appName = 'YMLTest')"
+
