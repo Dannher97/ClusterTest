@@ -39,7 +39,7 @@ jobs:
       # Deployment
       - name: Deploy app to shinyapps.io
         run: |
-          cd ${{ github.workspace }}/ClusteringPrototype
+          cd ${{ github.workspace }}/ClusterTest
           Rscript \
             -e 'library(rsconnect)' \
             -e 'rsconnect::setAccountInfo(name="${{ secrets.SHINYAPPS_NAME }}",token="${{ secrets.SHINYAPPS_TOKEN }}", secret="${{ secrets.SHINYAPPS_SECRET }}")' \
