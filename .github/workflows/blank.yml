@@ -26,11 +26,14 @@ jobs:
       run: |
         R -e 'install.packages(c("tidyverse", "shiny", "dplyr", "factoextra", "cluster", "NbClust", "ClusterR", "mclust", "fpc", "modeest", "fastDummies", "ramify", "scales", "shinyjs", "vcd"))'
 
-    - name: Deploy to shinyapps.io
+    - name: Deploy app to shinyapps.io
       env:
         SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_NAME }}
         SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
         SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
       run: |
-        R -e 'rsconnect::setAccountInfo(name = Sys.getenv("SHINYAPPS_ACCOUNT"), token = Sys.getenv("SHINYAPPS_TOKEN"), secret = Sys.getenv("SHINYAPPS_SECRET"));
-        rsconnect::deployApp(appDir = ".")'
+         cd ${{ github.workspace }}/ClusteringPrototype
+         Rscript \
+           -e 'library(rsconnect)' \
+           -e 'rsconnect::setAccountInfo(name=Sys.getenv("SHINYAPPS_ACCOUNT"),token=Sys.getenv("SHINYAPPS_TOKEN"), secret=Sys.getenv("SHINYAPPS_SECRET"))' \
+           -e 'rsconnect::deployApp(".",appName="clustering")'
