@@ -18,6 +18,10 @@ jobs:
       with:
         r-version: '4.3'
         
+    - name: Install rsconnect
+      run: |
+        R -e 'install.packages("rsconnect")'
+        
     - name: Install required packages
       run: |
         R -e 'install.packages(c("tidyverse", "shiny", "dplyr", "factoextra", "cluster", "NbClust", "ClusterR", "mclust", "fpc", "modeest", "fastDummies", "ramify", "scales", "shinyjs", "vcd"))'
