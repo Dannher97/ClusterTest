@@ -20,7 +20,7 @@ jobs:
         
     - name: Install required packages
       run: |
-        R -e 'install.packages(c('tidyverse', 'shiny', 'dplyr', 'factoextra', 'cluster', 'NbClust', 'ClusterR', 'mclust', 'fpc', 'modeest', 'fastDummies', 'ramify', 'scales', 'shinyjs', 'vcd'))'
+        R -e 'install.packages(c("tidyverse", "shiny", "dplyr", "factoextra", "cluster", "NbClust", "ClusterR", "mclust", "fpc", "modeest", "fastDummies", "ramify", "scales", "shinyjs", "vcd"))'
 
     - name: Deploy to shinyapps.io
       env:
