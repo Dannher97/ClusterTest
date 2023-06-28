@@ -28,9 +28,9 @@ jobs:
 
     - name: Deploy to shinyapps.io
       env:
-        SHINYAPPS_ACCOUNT: 'danielhernandez'
-        SHINYAPPS_TOKEN: '7D423A05109D4B1D813921209F978A72'
-        SHINYAPPS_SECRET: 'dTUu1Fr8Q68jNy0PL0dg/eOVaEQEZLU54Fq/cHlz'
+        SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_NAME }}
+        SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+        SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
       run: |
         R -e 'rsconnect::setAccountInfo(name = Sys.getenv("SHINYAPPS_ACCOUNT"), token = Sys.getenv("SHINYAPPS_TOKEN"), secret = Sys.getenv("SHINYAPPS_SECRET"));
         rsconnect::deployApp(appDir = ".")'
